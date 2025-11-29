@@ -16,8 +16,17 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-	"MSG": "This is ci/cd"
+	"MSG": "This is ci/cd",
+	"Response": "sucess"
 }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="a4e9b8bd-e535-4294-b0ae-63eaefb03576" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+root: payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="3ab06a24-ed9e-4abe-a184-24977454fd69" message="i'm final logger"/>
