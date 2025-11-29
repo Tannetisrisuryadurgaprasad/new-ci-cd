@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c6fb6007-8a61-4254-9ea3-9b2438e0aa27" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="new-ci-cdFlow" doc:id="9e4b611a-dd3d-4c46-a902-eac8b14a87db" >
+		<http:listener doc:name="Listener" doc:id="1d0f3079-ddbe-4df0-850d-f458edc15e6d" config-ref="HTTP_Listener_config" path="/new"/>
+		<ee:transform doc:name="Transform Message" doc:id="1ee8232c-39e0-428d-a079-366fb193fe07" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"MSG": "This is ci/cd"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3ab06a24-ed9e-4abe-a184-24977454fd69" message="i'm final logger"/>
+	</flow>
+</mule>
